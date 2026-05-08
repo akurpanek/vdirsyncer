@@ -5,7 +5,8 @@ status_path = "./status/"
 a = "CARDDAV1"
 b = "CARDDAV2"
 # Map the specific collection from CARDDAV1 to the specific collection on CARDDAV2
-collections = [["$CARDDAV1_COL", "$CARDDAV2_COL"]]
+# collections = [["$CARDDAV1_COL", "$CARDDAV2_COL"]]
+collections = [["contacts_sync", "$CARDDAV1_COLL", "$CARDDAV2_COLL"]]
 conflict_resolution = "a wins"
 
 [storage CARDDAV1]
