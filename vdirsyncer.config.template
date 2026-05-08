@@ -14,7 +14,7 @@ url = "$CARDDAV1_URL"
 username = "$CARDDAV1_USER"
 password.fetch = ["shell", "echo $CARDDAV1_PWD"]
 # Asynchron: CARDDAV1 is read-only; changes there will be pushed to CARDDAV2.
-# read_only = true
+read_only = true
 
 [storage CARDDAV2]
 type = "carddav"
