@@ -1,0 +1,49 @@
+name: Asynchronous CardDAV Sync (1 to 2)
+on:
+  schedule:
+    - cron: '0 * * * *' # Run once every hour
+  workflow_dispatch:   # Allow manual trigger via the GitHub UI
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # environment: production # Use the environment for secrets and variables
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install vdirsyncer
+        run: pip install vdirsyncer
+
+      - name: Generate Config
+        # Inject secrets and variables into the environment for envsubst
+        env:
+          CARDDAV1_URL: ${{ vars.CARDDAV1_URL }}
+          CARDDAV1_USER: ${{ vars.CARDDAV1_USER }}
+          CARDDAV1_PWD: ${{ secrets.CARDDAV1_PASSWORD }}
+          CARDDAV2_URL: ${{ vars.CARDDAV2_URL }}
+          CARDDAV2_USER: ${{ vars.CARDDAV2_USER }}
+          CARDDAV2_PWD: ${{ secrets.CARDDAV2_PASSWORD }}
+        run: envsubst < vdirsyncer.config.template > config
+
+      - name: Restore Cache
+        uses: actions/cache@v3
+        with:
+          path: status/
+          key: vdir-status-${{ github.run_id }}
+          restore-keys: vdir-status-
+
+      - name: Execute Sync
+        run: |
+          mkdir -p status
+          # "yes" automatically confirms the detection of new address book collections
+          yes | vdirsyncer -c config discover
+          vdirsyncer -c config sync
+
+      - name: Save Cache
+        if: always()
+        uses: actions/cache/save@v3
+        with:
+          path: status/
+          key: vdir-status-${{ github.run_id }}
