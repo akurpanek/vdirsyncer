@@ -3,14 +3,14 @@ status_path = "./status/"
 
 # Pair for Google -> Nextcloud
 [pair sync_pair1]
-a = "GOOGLE"
+a = "GOOGLE_OAUTH2"
 b = "NEXTCLOUD"
 collections = [["google_to_nextcloud", "${GOOGLE_COL}", "${NEXTCLOUD_COL}"]]
 conflict_resolution = "a wins"
 
 # Pair for Google -> mailbox.org
 [pair sync_pair2]
-a = "GOOGLE"
+a = "GOOGLE_OAUTH2"
 b = "MAILBOX"
 collections = [["google_to_mailbox", "${GOOGLE_COL}", "${MAILBOX_COL}"]]
 conflict_resolution = "a wins"
@@ -22,6 +22,14 @@ url = "$GOOGLE_URL"
 username = "$GOOGLE_USER"
 password.fetch = ["shell", "echo $GOOGLE_PWD"]
 read_only = true
+
+# Storage Definition for Google Contacts (OAuth2)
+[storage GOOGLE_OAUTH2]
+type = "google_contacts"
+token_file = "./google_token"
+client_id = "${GOOGLE_CLIENT_ID}"
+client_secret = "${GOOGLE_CLIENT_SECRET}"
+# collection = "${GOOGLE_COL}"
 
 # Storage Definition for Nextcloud Contacts
 [storage NEXTCLOUD]
