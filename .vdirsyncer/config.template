@@ -5,7 +5,7 @@ status_path = "~/.vdirsyncer/status/"
 [pair google_nextcloud]
 a = "google"
 b = "nextcloud"
-collections = [["google_contacts", "kontakte"]]
+collections = [["sync_google", "google_contacts", "kontakte"]]
 
 [storage google]
 type = "google_contacts"
@@ -23,7 +23,7 @@ password = "$NEXTCLOUD_PASSWORD"
 [pair nextcloud_mailbox]
 a = "nextcloud"
 b = "mailbox"
-collections = [["kontakte", "32"]]
+collections = [["sync_mailbox", "kontakte", "32"]]
 
 [storage mailbox]
 type = "carddav"
