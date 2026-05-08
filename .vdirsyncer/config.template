@@ -1,0 +1,32 @@
+[general]
+status_path = "~/.vdirsyncer/status/"
+
+# Paar 1: Google <-> Nextcloud
+[pair google_nextcloud]
+a = "google"
+b = "nextcloud"
+collections = [["kontakte", "google_contacts"]] # Mapping der Adressbücher
+
+[storage google]
+type = "google_contacts"
+client_id = "$GOOGLE_CLIENT_ID"
+client_secret = "$GOOGLE_CLIENT_SECRET"
+token_file = "~/.vdirsyncer/google_token.json"
+
+[storage nextcloud]
+type = "carddav"
+url = "$NEXTCLOUD_URL"
+username = "$NEXTCLOUD_USER"
+password = "$NEXTCLOUD_PASSWORD"
+
+# Paar 2: Nextcloud <-> Mailbox
+[pair nextcloud_mailbox]
+a = "nextcloud"
+b = "mailbox"
+collections = [["kontakte", "32"]]
+
+[storage mailbox]
+type = "carddav"
+url = "$MAILBOX_URL"
+username = "$MAILBOX_USER"
+password = "$MAILBOX_PASSWORD"
