@@ -5,18 +5,14 @@ status_path = "./status/"
 [pair sync_pair1]
 a = "GOOGLE"
 b = "NEXTCLOUD"
-collections = [
-    ["google_to_nextcloud", "${GOOGLE_COL}", "${NEXTCLOUD_COL}"]
-]
+collections = [["google_to_nextcloud", "${GOOGLE_COL}", "${NEXTCLOUD_COL}"]]
 conflict_resolution = "a wins"
 
 # Pair for Google -> mailbox.org
 [pair sync_pair2]
 a = "GOOGLE"
 b = "MAILBOX"
-collections = [
-    ["google_to_mailbox", "${GOOGLE_COL}", "${MAILBOX_COL}"]
-  ]
+collections = [["google_to_mailbox", "${GOOGLE_COL}", "${MAILBOX_COL}"]]
 conflict_resolution = "a wins"
 
 # Storage Definition for Google Contacts
