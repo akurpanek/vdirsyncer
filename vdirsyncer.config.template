@@ -7,7 +7,8 @@ b = "CARDDAV2"
 # Map the specific collection from CARDDAV1 to the specific collection on CARDDAV2
 collections = [
     ["contacts_main", "${CARDDAV1_COL1}", "${CARDDAV2_COL1}"],
-    ["contacts_archive", "${CARDDAV1_COL2}", "${CARDDAV2_COL2}"]
+    ["contacts_archive", "${CARDDAV1_COL2}", "${CARDDAV2_COL2}"],
+    ["contacts_revalidation", "${CARDDAV1_COL3}", "${CARDDAV2_COL3}"]
   ]
 conflict_resolution = "a wins"
 
