@@ -22,9 +22,11 @@ jobs:
           CARDDAV1_URL: ${{ vars.CARDDAV1_URL }}
           CARDDAV1_USER: ${{ vars.CARDDAV1_USER }}
           CARDDAV1_PWD: ${{ secrets.CARDDAV1_PASSWORD }}
+          CARDDAV1_COLLECTION: ${{ vars.CARDDAV1_COLLECTION }}
           CARDDAV2_URL: ${{ vars.CARDDAV2_URL }}
           CARDDAV2_USER: ${{ vars.CARDDAV2_USER }}
           CARDDAV2_PWD: ${{ secrets.CARDDAV2_PASSWORD }}
+          CARDDAV2_COLLECTION: ${{ vars.CARDDAV2_COLLECTION 
         run: envsubst < vdirsyncer.config.template > config
 
       - name: Restore Cache
