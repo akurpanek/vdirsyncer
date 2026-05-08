@@ -21,22 +21,43 @@ jobs:
           GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
         run: |
           mkdir -p ~/.config/vdirsyncer/ ~/.vdirsyncer/status/
+          
           python3 -c "
-          import requests, json, time
+          import requests, json, time, sys
+          
+          # 1. Token bereinigen (verhindert Whitespace-Fehler)
+          refresh_token = '$GOOGLE_REFRESH_TOKEN'.strip()
+          
+          # 2. Anfrage an Google
           res = requests.post('https://googleapis.com', data={
               'client_id': '$GOOGLE_CLIENT_ID',
               'client_secret': '$GOOGLE_CLIENT_SECRET',
-              'refresh_token': '$GOOGLE_REFRESH_TOKEN',
+              'refresh_token': refresh_token,
               'grant_type': 'refresh_token'
-          }).json()
-          res.update({'client_id': '$GOOGLE_CLIENT_ID', 'client_secret': '$GOOGLE_CLIENT_SECRET'})
-          # Setze Ablaufdatum in die Zukunft
-          res['expires_at'] = time.time() + res.get('expires_in', 3600)
+          })
+          
+          if res.status_code != 200:
+              print(f'GOOGLE ERROR: {res.status_code} - {res.text}')
+              sys.exit(1)
+              
+          data = res.json()
+          data.update({'client_id': '$GOOGLE_CLIENT_ID', 'client_secret': '$GOOGLE_CLIENT_SECRET'})
+          data['expires_at'] = time.time() + data.get('expires_in', 3600)
+          
           with open('/home/runner/.vdirsyncer/google_token.json', 'w') as f:
-              json.dump(res, f)
+              json.dump(data, f)
           "
+          
+          # 3. Config erstellen (Variablen aus GitHub Variables nutzen)
           envsubst < .vdirsyncer/config.template > ~/.config/vdirsyncer/config
       
+      - name: Restore Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.vdirsyncer/status/
+          key: vdirsyncer-status-${{ github.run_id }}
+          restore-keys: vdirsyncer-status-
+
       - name: Sync
         run: |
           # Nutze -vdebug für maximale Details
