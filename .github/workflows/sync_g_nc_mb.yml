@@ -22,10 +22,10 @@ jobs:
           MAILBOX_PASSWORD: ${{ secrets.MAILBOX_PASSWORD }}
         run: |
           mkdir -p ~/.config/vdirsyncer/ ~/.vdirsyncer/status/
-          # Ersetze Platzhalter in der Config
+          # Config erstellen (Variablen ersetzen)
           envsubst < .vdirsyncer/config.template > ~/.config/vdirsyncer/config
-          # Erstelle Token-Datei für Google
-          echo "{\"access_token\": \"\", \"refresh_token\": \"$GOOGLE_REFRESH_TOKEN\", \"token_type\": \"Bearer\", \"expires_in\": 3600}" > ~/.vdirsyncer/google_token.json
+          # Google Token Datei absolut sauber erstellen
+          printf '{"access_token": "", "refresh_token": "%s", "token_type": "Bearer", "expires_in": 3600}' "$GOOGLE_REFRESH_TOKEN" > ~/.vdirsyncer/google_token.json
       - name: Sync
         run: |
           vdirsyncer discover
