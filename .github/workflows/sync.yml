@@ -19,18 +19,14 @@ jobs:
       - name: Generate Config
         # Inject secrets and variables into the environment for envsubst
         env:
-          CARDDAV1_URL: ${{ vars.CARDDAV1_URL }}
-          CARDDAV1_USER: ${{ vars.CARDDAV1_USER }}
-          CARDDAV1_PWD: ${{ secrets.CARDDAV1_PASSWORD }}
-          CARDDAV1_COL1: ${{ vars.CARDDAV1_COLLECTION1 }}
-          CARDDAV1_COL2: ${{ vars.CARDDAV1_COLLECTION2 }}
-          CARDDAV1_COL3: ${{ vars.CARDDAV1_COLLECTION3 }}
-          CARDDAV2_URL: ${{ vars.CARDDAV2_URL }}
-          CARDDAV2_USER: ${{ vars.CARDDAV2_USER }}
-          CARDDAV2_PWD: ${{ secrets.CARDDAV2_PASSWORD }}
-          CARDDAV2_COL1: ${{ vars.CARDDAV2_COLLECTION1 }}
-          CARDDAV2_COL2: ${{ vars.CARDDAV2_COLLECTION2 }}
-          CARDDAV2_COL3: ${{ vars.CARDDAV2_COLLECTION3 }}
+          NEXTCLOUD_URL: ${{ vars.NEXTCLOUD_URL }}
+          NEXTCLOUD_USER: ${{ vars.NEXTCLOUD_USER }}
+          NEXTCLOUD_PWD: ${{ secrets.NEXTCLOUD_PASSWORD }}
+          NEXTCLOUD_COL: ${{ vars.NEXTCLOUD_COLLECTION }}
+          MAILBOX_URL: ${{ vars.MAILBOX_URL }}
+          MAILBOX_USER: ${{ vars.MAILBOX_USER }}
+          MAILBOX_PWD: ${{ secrets.MAILBOX_PASSWORD }}
+          MAILBOX_COL: ${{ vars.MAILBOX_COLLECTION }}
         run: envsubst < vdirsyncer.config.template > config
 
       - name: Restore Cache
