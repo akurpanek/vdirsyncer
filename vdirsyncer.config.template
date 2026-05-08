@@ -10,7 +10,7 @@ collections = [
 ]
 conflict_resolution = "a wins"
 
-# Pair for Nextcloud -> mailbox.org
+# Pair for Google -> mailbox.org
 [pair sync_pair2]
 a = "GOOGLE"
 b = "MAILBOX"
