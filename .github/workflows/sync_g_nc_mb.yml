@@ -9,29 +9,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Install vdirsyncer
         run: |
           pip install vdirsyncer[google] aiohttp-oauthlib
+
       - name: Prepare Config
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
         run: |
           mkdir -p ~/.config/vdirsyncer/ ~/.vdirsyncer/status/
-          # Token-Datei absolut minimalistisch erstellen
-          cat <<EOF > ~/.vdirsyncer/google_token.json
-          {
-            "client_id": "${{ secrets.GOOGLE_CLIENT_ID }}",
-            "client_secret": "${{ secrets.GOOGLE_CLIENT_SECRET }}",
-            "refresh_token": "${{ secrets.GOOGLE_REFRESH_TOKEN }}",
-            "token_type": "Bearer"
-          }
-          EOF
+          python3 -c "
+          import requests, json, time
+          res = requests.post('https://googleapis.com', data={
+              'client_id': '$GOOGLE_CLIENT_ID',
+              'client_secret': '$GOOGLE_CLIENT_SECRET',
+              'refresh_token': '$GOOGLE_REFRESH_TOKEN',
+              'grant_type': 'refresh_token'
+          }).json()
+          res.update({'client_id': '$GOOGLE_CLIENT_ID', 'client_secret': '$GOOGLE_CLIENT_SECRET'})
+          # Setze Ablaufdatum in die Zukunft
+          res['expires_at'] = time.time() + res.get('expires_in', 3600)
+          with open('/home/runner/.vdirsyncer/google_token.json', 'w') as f:
+              json.dump(res, f)
+          "
           envsubst < .vdirsyncer/config.template > ~/.config/vdirsyncer/config
-      - name: Cache vdirsyncer status
-        uses: actions/cache@v3
-        with:
-          path: ~/.vdirsyncer/status/
-          key: vdirsyncer-status-${{ github.run_id }}
-          restore-keys: |
-            vdirsyncer-status-
+      
       - name: Sync
         run: |
           # Nutze -vdebug für maximale Details
