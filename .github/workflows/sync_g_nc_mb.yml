@@ -25,6 +25,13 @@ jobs:
           }
           EOF
           envsubst < .vdirsyncer/config.template > ~/.config/vdirsyncer/config
+      - name: Cache vdirsyncer status
+        uses: actions/cache@v3
+        with:
+          path: ~/.vdirsyncer/status/
+          key: vdirsyncer-status-${{ github.run_id }}
+          restore-keys: |
+            vdirsyncer-status-
       - name: Sync
         run: |
           # Nutze -vdebug für maximale Details
