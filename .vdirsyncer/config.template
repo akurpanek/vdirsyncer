@@ -17,7 +17,7 @@ token_file = "~/.vdirsyncer/google_token.json"
 type = "carddav"
 url = "$NEXTCLOUD_URL"
 username = "$NEXTCLOUD_USER"
-password.fetch = ["shell", "echo $NEXTCLOUD_PASSWORD"]
+password = "$NEXTCLOUD_PASSWORD"
 
 # Paar 2: Nextcloud <-> Mailbox
 [pair nextcloud_mailbox]
@@ -29,4 +29,4 @@ collections = [["sync_mailbox", "kontakte", "32"]]
 type = "carddav"
 url = "$MAILBOX_URL"
 username = "$MAILBOX_USER"
-password.fetch = ["shell", "echo $MAILBOX_PASSWORD"]
+password = "$MAILBOX_PASSWORD"
