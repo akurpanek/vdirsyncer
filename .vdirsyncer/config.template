@@ -5,7 +5,7 @@ status_path = "~/.vdirsyncer/status/"
 [pair google_nextcloud]
 a = "google"
 b = "nextcloud"
-collections = [["kontakte", "google_contacts"]] # Mapping der Adressbücher
+collections = [["google_contacts", "kontakte"]] # Mapping der Adressbücher
 
 [storage google]
 type = "google_contacts"
