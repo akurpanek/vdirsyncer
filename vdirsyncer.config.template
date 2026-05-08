@@ -33,6 +33,7 @@ type = "carddav"
 url = "$NEXTCLOUD_URL"
 username = "$NEXTCLOUD_USER"
 password.fetch = ["shell", "echo $NEXTCLOUD_PWD"]
+read_only = false
 
 # Storage Definition for mailbox.org Contacts
 [storage MAILBOX]
@@ -40,3 +41,4 @@ type = "carddav"
 url = "$MAILBOX_URL"
 username = "$MAILBOX_USER"
 password.fetch = ["shell", "echo $MAILBOX_PWD"]
+read_only = false
