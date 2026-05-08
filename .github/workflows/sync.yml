@@ -19,18 +19,25 @@ jobs:
       - name: Generate Config
         # Inject secrets and variables into the environment for envsubst
         env:
+          # Nextcloud
           NEXTCLOUD_URL: ${{ vars.NEXTCLOUD_URL }}
           NEXTCLOUD_USER: ${{ vars.NEXTCLOUD_USER }}
           NEXTCLOUD_PWD: ${{ secrets.NEXTCLOUD_PASSWORD }}
           NEXTCLOUD_COL: ${{ vars.NEXTCLOUD_COLLECTION }}
+          
+          # Mailbox
           MAILBOX_URL: ${{ vars.MAILBOX_URL }}
           MAILBOX_USER: ${{ vars.MAILBOX_USER }}
           MAILBOX_PWD: ${{ secrets.MAILBOX_PASSWORD }}
           MAILBOX_COL: ${{ vars.MAILBOX_COLLECTION }}
+          
+          # Google
           GOOGLE_URL: ${{ vars.GOOGLE_URL }}
           GOOGLE_USER: ${{ vars.GOOGLE_USER }}
           GOOGLE_PWD: ${{ secrets.GOOGLE_PASSWORD }}
-          GOOGLE_COL: ${{ vars.GOOGLE_COLLECTION }}          
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_COL: ${{ vars.GOOGLE_COLLECTION }}     
         run: envsubst < vdirsyncer.config.template > config
 
       - name: Restore Cache
