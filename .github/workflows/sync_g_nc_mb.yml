@@ -1,4 +1,4 @@
-name: Sync Contacts G-NC-MB
+name: CardDAV Sync (G <> NC <> MB)
 on:
   schedule:
     - cron: '0 * * * *' # Stündlich
