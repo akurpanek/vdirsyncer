@@ -10,7 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install vdirsyncer
-        run: pip install vdirsyncer
+        run: |
+          pip install vdirsyncer[google]
+          pip install aiohttp-oauthlib
       - name: Prepare Config
         env:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
