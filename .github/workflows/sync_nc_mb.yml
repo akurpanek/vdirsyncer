@@ -1,4 +1,4 @@
-name: Asynchronous CardDAV Sync (1 to 2)
+name: CardDAV Sync (NC > MB)
 on:
   schedule:
     - cron: '0 * * * *' # Run once every hour
