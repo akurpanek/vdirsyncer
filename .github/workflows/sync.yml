@@ -14,8 +14,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install vdirsyncer
-        run: pip install vdirsyncer
-
+        run: pip install vdirsyncer[google]
+        
       - name: Generate Config
         # Inject secrets and variables into the environment for envsubst
         env:
