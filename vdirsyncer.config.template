@@ -4,7 +4,7 @@ status_path = "./status/"
 # Pair for Google -> Nextcloud
 [pair sync_pair1]
 a = "GOOGLE"
-b = "NEXTCLOUD"
+b = "NEXTCLOUD1"
 collections = [
     ["google_to_nextcloud", "${GOOGLE_COL}", "${NEXTCLOUD_COL}"]
 ]
@@ -12,7 +12,7 @@ conflict_resolution = "a wins"
 
 # Pair for Nextcloud -> mailbox.org
 [pair sync_pair2]
-a = "NEXTCLOUD"
+a = "NEXTCLOUD2"
 b = "MAILBOX"
 # Map the specific collection from CARDDAV1 to the specific collection on CARDDAV2
 collections = [
@@ -27,8 +27,15 @@ url = "$GOOGLE_URL"
 username = "$GOOGLE_USER"
 password.fetch = ["shell", "echo $GOOGLE_PWD"]
 
-# Storage Definition for Nextcloud Contacts
-[storage NEXTCLOUD]
+# Storage Definition for Nextcloud Contacts sync with GOOGLE
+[storage NEXTCLOUD1]
+type = "carddav"
+url = "$NEXTCLOUD_URL"
+username = "$NEXTCLOUD_USER"
+password.fetch = ["shell", "echo $NEXTCLOUD_PWD"]
+
+# Storage Definition for Nextcloud Contacts sync with mailbox.org
+[storage NEXTCLOUD2]
 type = "carddav"
 url = "$NEXTCLOUD_URL"
 username = "$NEXTCLOUD_USER"
