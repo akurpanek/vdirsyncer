@@ -1,4 +1,4 @@
-name: Sync Contacts
+name: Sync Contacts G-NC-MB
 on:
   schedule:
     - cron: '0 * * * *' # Stündlich
