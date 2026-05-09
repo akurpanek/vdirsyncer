@@ -44,7 +44,7 @@ jobs:
           mkdir -p status
           # "yes" automatically confirms the detection of new address book collections
           yes | vdirsyncer -c config discover
-          vdirsyncer -c config --max-workers 1 -vdebug sync
+          vdirsyncer -c config sync
 
       - name: Save Cache
         if: always()
