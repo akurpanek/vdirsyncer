@@ -1,7 +1,7 @@
 name: Asynchronous CardDAV Sync (1 to 2)
 on:
   schedule:
-    - cron: '0 * * * *' # Run once every hour
+    - cron: '0 */4 * * *' # Runs every 4 hours
   workflow_dispatch:   # Allow manual trigger via the GitHub UI
 
 jobs:
